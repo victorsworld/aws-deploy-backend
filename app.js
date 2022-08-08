@@ -7,13 +7,15 @@ require('dotenv').config();
 var cors = require('cors');
 var mongoose = require('mongoose');
 // mongoose connector
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true})
+// mongoose.set('useNewUrlParser', true);
+// mongoose.set('useFindAndModify', false);
+// mongoose.set('useCreateIndex', true);
+// mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true})
+//         .then(() => console.log('MONGODB CONNECTED'))
+//         .catch(err => console.log(err));
+mongoose.connect(process.env.MONGODB_URI)
         .then(() => console.log('MONGODB CONNECTED'))
         .catch(err => console.log(err));
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users/users');
 var talkRouter = require('./routes/talk/talk');
