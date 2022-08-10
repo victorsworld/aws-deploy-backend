@@ -14,7 +14,7 @@ var mongoose = require('mongoose');
 //         .then(() => console.log('MONGODB CONNECTED'))
 //         .catch(err => console.log(err));
 mongoose.connect(process.env.MONGODB_URI)
-        .then(() => console.log('MONGODB CONNECTED'))
+        .then(() => console.log('MONGODB CONNECTED!!'))
         .catch(err => console.log(err));
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users/users');
