@@ -6,13 +6,7 @@ var logger = require('morgan');
 require('dotenv').config();
 var cors = require('cors');
 var mongoose = require('mongoose');
-// mongoose connector
-// mongoose.set('useNewUrlParser', true);
-// mongoose.set('useFindAndModify', false);
-// mongoose.set('useCreateIndex', true);
-// mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true})
-//         .then(() => console.log('MONGODB CONNECTED'))
-//         .catch(err => console.log(err));
+
 mongoose.connect(process.env.MONGODB_URI)
         .then(() => console.log('MONGODB CONNECTED!!'))
         .catch(err => console.log(err));
@@ -27,16 +21,25 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use(cors())
+// match origin to your frontend, use .env
+app.use(cors(
+  {
+    origin: process.env.CORS_ORIGIN
+  }
+))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// all routes must have a common prefix - /api is standard 
+// this to so nginx can use path routing to properly forward backend request
 app.use('/api', indexRouter);
 app.use('/api/users', usersRouter); 
 app.use('/api/talk', talkRouter); 
+
+// if not using bin/www from express generator, set port below
 // app.listen(3001, () => console.log('Backend on port 4000'))
 
 // catch 404 and forward to error handler
